@@ -1,0 +1,260 @@
+<Window x:Class="DevLauncherInstaller.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DevLauncherInstaller"
+        Height="470" Width="600"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        Icon="icon.ico">
+
+    <Window.Resources>
+        <Style x:Key="ModernCheckBox" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#E5E7EB"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Border x:Name="CheckBorder" Width="18" Height="18" CornerRadius="4"
+                                    Background="#222530" BorderBrush="#374151" BorderThickness="1.5"
+                                    Margin="0,0,10,0">
+                                <Path x:Name="CheckGlyph"
+                                      Data="M 3,8 L 7,12 L 15,4"
+                                      Stroke="#FFFFFF"
+                                      StrokeThickness="2"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      Visibility="Collapsed"/>
+                            </Border>
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckBorder" Property="Background" Value="#22C55E"/>
+                                <Setter TargetName="CheckBorder" Property="BorderBrush" Value="#16A34A"/>
+                                <Setter TargetName="CheckGlyph" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="CheckBorder" Property="BorderBrush" Value="#22C55E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PrimaryBtn" TargetType="Button">
+            <Setter Property="Background" Value="#22C55E"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="18,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#16A34A"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#15803D"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#374151"/>
+                                <Setter Property="Foreground" Value="#6B7280"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SecondaryBtn" TargetType="Button">
+            <Setter Property="Background" Value="#222530"/>
+            <Setter Property="Foreground" Value="#E5E7EB"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#374151"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2E3342"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#4B5563"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1A1C23"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="#121316" BorderBrush="#2E3342" BorderThickness="1.5" CornerRadius="12">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="42"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Barra de titulo -->
+            <Border Grid.Row="0" Background="#181A20" CornerRadius="12,12,0,0" MouseDown="TitleBar_MouseDown">
+                <Grid Margin="12,0,8,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="icon.png" Width="20" Height="20" Margin="0,0,8,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="DevLauncherInstaller" Foreground="#9CA3AF" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Click="BtnMinimize_Click" Width="30" Height="28" Background="Transparent" BorderThickness="0" Foreground="#9CA3AF" Cursor="Hand" Content="─" FontSize="11"/>
+                        <Button Click="BtnClose_Click" Width="30" Height="28" Background="Transparent" BorderThickness="0" Foreground="#9CA3AF" Cursor="Hand" Content="✕" FontSize="12" Margin="4,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Contenido -->
+            <Grid Grid.Row="1" Margin="24,18,24,20">
+
+                <!-- Pantalla 1: Configuracion -->
+                <Grid x:Name="gridSetup">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,16">
+                        <Border Width="56" Height="56" CornerRadius="10" Background="#1E212B" BorderBrush="#2E3342" BorderThickness="1" Margin="0,0,16,0">
+                            <Image Source="icon.png" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Instalar DevLauncher" Foreground="#FFFFFF" FontSize="20" FontWeight="Bold"/>
+                            <TextBlock Text="Launcher para Minecraft Java Edition" Foreground="#9CA3AF" FontSize="12" Margin="0,3,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Carpeta de instalacion -->
+                    <Border Grid.Row="1" Background="#181A22" BorderBrush="#2A2F3D" BorderThickness="1" CornerRadius="8" Padding="14" Margin="0,0,0,14">
+                        <StackPanel>
+                            <TextBlock Text="Carpeta de destino:" Foreground="#D1D5DB" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="txtInstallPath" Grid.Column="0" Height="34" Background="#222530" Foreground="#FFFFFF" BorderBrush="#374151" BorderThickness="1" Padding="8,6" VerticalContentAlignment="Center" FontSize="12" IsReadOnly="False" TextChanged="TxtInstallPath_TextChanged"/>
+                                <Button Grid.Column="1" Content="Examinar..." Style="{StaticResource SecondaryBtn}" Height="34" Margin="8,0,0,0" Click="BtnBrowse_Click"/>
+                            </Grid>
+                            <TextBlock x:Name="txtDiskSpace" Text="Espacio requerido: ~160 MB" Foreground="#9CA3AF" FontSize="11" Margin="2,6,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Opciones de accesos directos -->
+                    <Border Grid.Row="2" Background="#181A22" BorderBrush="#2A2F3D" BorderThickness="1" CornerRadius="8" Padding="14" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="Opciones de instalación:" Foreground="#D1D5DB" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                            
+                            <CheckBox x:Name="chkDesktopShortcut" Style="{StaticResource ModernCheckBox}" IsChecked="True" Margin="0,0,0,4">
+                                <StackPanel Margin="0,-2,0,0">
+                                    <TextBlock Text="Crear acceso directo en el Escritorio" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="13"/>
+                                    <TextBlock Text="Acceso rápido en el escritorio con el ícono del juego" Foreground="#9CA3AF" FontSize="11" Margin="0,1,0,0"/>
+                                </StackPanel>
+                            </CheckBox>
+
+                            <Separator Background="#262A36" Margin="0,8,0,8"/>
+
+                            <CheckBox x:Name="chkStartMenuShortcut" Style="{StaticResource ModernCheckBox}" IsChecked="True" Margin="0,0,0,4">
+                                <StackPanel Margin="0,-2,0,0">
+                                    <TextBlock Text="Agregar al Menú Inicio" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="13"/>
+                                    <TextBlock Text="Para iniciar desde la búsqueda de Windows" Foreground="#9CA3AF" FontSize="11" Margin="0,1,0,0"/>
+                                </StackPanel>
+                            </CheckBox>
+
+                            <Separator Background="#262A36" Margin="0,8,0,8"/>
+
+                            <CheckBox x:Name="chkLaunchAfter" Style="{StaticResource ModernCheckBox}" IsChecked="True">
+                                <StackPanel Margin="0,-2,0,0">
+                                    <TextBlock Text="Iniciar DevLauncher al finalizar" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="13"/>
+                                </StackPanel>
+                            </CheckBox>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Botones -->
+                    <Grid Grid.Row="3">
+                        <Button Content="Cancelar" Style="{StaticResource SecondaryBtn}" HorizontalAlignment="Left" Width="100" Height="38" Click="BtnCancel_Click"/>
+                        <Button Style="{StaticResource SecondaryBtn}" HorizontalAlignment="Center" Height="38" Padding="14,0" Click="BtnGithub_Click" ToolTip="Visitar GitHub de MrPinkFlamingo">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Path Width="15" Height="15" Stretch="Uniform" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,6,0"
+                                      Data="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/>
+                                <TextBlock Text="GitHub" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btnInstall" Content="Instalar" Style="{StaticResource PrimaryBtn}" HorizontalAlignment="Right" Height="38" Padding="24,0" Click="BtnInstall_Click"/>
+                    </Grid>
+                </Grid>
+
+                <!-- Pantalla 2: Progreso -->
+                <Grid x:Name="gridProgress" Visibility="Collapsed" VerticalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center" Width="480">
+                        <Border Width="64" Height="64" CornerRadius="12" Background="#1E212B" BorderBrush="#22C55E" BorderThickness="1.5" HorizontalAlignment="Center" Margin="0,0,0,18">
+                            <Image Source="icon.png" Width="44" Height="44" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Border>
+
+                        <TextBlock Text="Instalando DevLauncher..." Foreground="#FFFFFF" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <TextBlock x:Name="txtProgressStatus" Text="Preparando archivos..." Foreground="#9CA3AF" FontSize="13" HorizontalAlignment="Center" Margin="0,0,0,16"/>
+
+                        <Border Height="10" Background="#222530" CornerRadius="5" Margin="0,0,0,10">
+                            <ProgressBar x:Name="progressBar" Height="10" Background="Transparent" Foreground="#22C55E" BorderThickness="0" Minimum="0" Maximum="100" Value="0"/>
+                        </Border>
+
+                        <TextBlock x:Name="txtProgressDetail" Text="Iniciando..." Foreground="#6B7280" FontSize="11" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Pantalla 3: Finalizado -->
+                <Grid x:Name="gridFinished" Visibility="Collapsed" VerticalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center" Width="480">
+                        <Border Width="68" Height="68" CornerRadius="34" Background="#13331C" BorderBrush="#22C55E" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,16">
+                            <TextBlock Text="✓" Foreground="#22C55E" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-4,0,0"/>
+                        </Border>
+
+                        <TextBlock Text="Instalación completada" Foreground="#FFFFFF" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <TextBlock Text="DevLauncher se instaló correctamente en tu equipo." Foreground="#9CA3AF" FontSize="13" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,0,0,18"/>
+
+                        <Border Background="#181A22" BorderBrush="#2A2F3D" BorderThickness="1" CornerRadius="8" Padding="14" Margin="0,0,0,24">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock x:Name="txtFinishedPath" Text="Ubicación: " Foreground="#D1D5DB" FontSize="12" Margin="0,0,0,6" TextAlignment="Center" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock x:Name="txtFinishedShortcuts" Text="Accesos directos creados." Foreground="#22C55E" FontSize="12" FontWeight="SemiBold" TextAlignment="Center" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Button x:Name="btnFinish" Content="Iniciar DevLauncher" Style="{StaticResource PrimaryBtn}" Height="42" Padding="28,0" HorizontalAlignment="Center" Click="BtnFinish_Click"/>
+                    </StackPanel>
+                </Grid>
+
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,18 @@
+## Build & Output
+**/bin/
+**/obj/
+*.pdb
+*.user
+*.suo
+.vs/
+
+## Executables & Distribution (Use GitHub Releases for binaries)
+*.exe
+*.zip
+installer/payload.zip
+launcher_config.json
+
+## Logs & Temp
+*.log
+.system_generated/
+scratch/

@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <AssemblyName>DevLauncher</AssemblyName>
+    <RootNamespace>DevLauncherCS</RootNamespace>
+    <PublishTrimmed>false</PublishTrimmed>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <PublishReadyToRunShowWarnings>false</PublishReadyToRunShowWarnings>
+    <Optimize>true</Optimize>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <PathMap>$(MSBuildProjectDirectory)=/_</PathMap>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CmlLib.Core" Version="4.0.6" />
+  </ItemGroup>
+
+  <!-- Incrustar iconos e imagenes como recursos WPF dentro del ejecutable -->
+  <ItemGroup>
+    <Resource Include="icon.ico" />
+    <Resource Include="icon.png" />
+    <Resource Include="assets\**" />
+  </ItemGroup>
+
+</Project>
